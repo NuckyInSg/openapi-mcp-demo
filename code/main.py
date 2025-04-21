@@ -613,4 +613,4 @@ async def user_batch_get_id(token: str, usernames: List[str]) -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Initialize and run the server
-    mcp.run(transport='stdio')
+    mcp.run(transport='sse')
