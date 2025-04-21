@@ -1,6 +1,8 @@
 from typing import Any, Dict, List, Optional
 import httpx
 from mcp.server.fastmcp import FastMCP
+from starlette.applications import Starlette
+from starlette.routing import Mount
 
 # Initialize FastMCP server
 mcp = FastMCP("openapi")
@@ -611,6 +613,9 @@ async def user_batch_get_id(token: str, usernames: List[str]) -> Dict[str, Any]:
     
     return result
 
-if __name__ == "__main__":
-    # Initialize and run the server
-    mcp.run(transport='sse')
+# 创建 Starlette 应用
+app = Starlette(
+    routes=[
+        Mount('/', app=mcp.sse_app()),
+    ]
+)
